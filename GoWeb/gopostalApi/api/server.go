@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"com.loollab/postalapi/storage"
@@ -21,12 +20,9 @@ func NewServer(listenAddr string, store storage.Storage) *Server {
 
 func (s *Server) Start() error {
 	http.HandleFunc("/postalApi", s.handleGetUserByID)
+	http.HandleFunc("/postalApi/foo", s.handleGetFoo)
+	http.HandleFunc("/postalApi/bar", s.handleGetBar)
+	http.HandleFunc("/postalApi/name", s.handleGetName)
+
 	return http.ListenAndServe(s.listenAddr, nil)
-}
-
-func (s *Server) handleGetUserByID(w http.ResponseWriter, r *http.Request) {
-	user := s.store.Get(10)
-
-	json.NewEncoder(w).Encode(user)
-
 }

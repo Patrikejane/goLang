@@ -11,7 +11,25 @@ func NewMemoryStorage() *MemoryStorage {
 
 func (s *MemoryStorage) Get(id int) *types.User {
 	return &types.User{
-		ID:   1,
+		Id:   1,
 		Name: "Foo",
+	}
+}
+func (s *MemoryStorage) GetFoo(id int) *types.User {
+	return &types.User{
+		Id:   1,
+		Name: "Foo",
+	}
+}
+func (s *MemoryStorage) GetBar(id int) *types.User {
+	return &types.User{
+		Id:   1,
+		Name: "Bar",
+	}
+}
+func (s *MemoryStorage) GetName(id int) *types.User {
+	return &types.User{
+		Id:   1,
+		Name: "Name",
 	}
 }

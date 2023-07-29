@@ -4,6 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"com.loollab/postalapi/api"
 	"com.loollab/postalapi/storage"
@@ -11,6 +14,10 @@ import (
 )
 
 func main() {
+
+	// Create a channel to receive OS signals.
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 
 	listenAddr := flag.String("listenAddr", "3000", "the Server Address")
 	flag.Parse()
@@ -21,9 +28,14 @@ func main() {
 	fmt.Println("server runs on", *listenAddr)
 	log.Fatal(server.Start())
 
-	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-	// })
+	fmt.Println("Server is running. Press Ctrl + C to stop.")
 
-	// http.ListenAndServe(":8080", nil)
+	// Block the main goroutine until a signal is received.
+	<-sigChan
+	// Perform any cleanup or graceful shutdown here before exiting.
+	fmt.Println("\nServer is shutting down...")
+	// For example, if you have a HTTP server:
+	// stopHTTPServer()
+
+	fmt.Println("Goodbye!")
 }

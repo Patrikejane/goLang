@@ -7,7 +7,7 @@ type MongoStorage struct {
 
 func (s *MongoStorage) Get(id int) *types.User {
 	return &types.User{
-		ID:   1,
-		Name: "Foo",
+		Id:   1,
+		Name: "Mongo Foo",
 	}
 }
